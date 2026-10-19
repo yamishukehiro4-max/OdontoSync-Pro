@@ -123,14 +123,20 @@
         footer ul li a:hover { color: white; padding-left: 5px; }
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #333; font-size: 13px; color: #777; }
 
+        /* =========================================
+           ARREGLO RESPONSIVE PARA CELULARES AQUI
+           ========================================= */
         @media (max-width: 768px) {
-            #inicio { flex-direction: column; text-align: center; margin-top: 40px; }
+            header { flex-direction: column; padding: 15px; gap: 15px; }
+            nav { display: flex; justify-content: center; flex-wrap: wrap; width: 100%; gap: 10px; }
+            nav a { font-size: 13px; }
+            nav a.btn { padding: 8px 15px; }
+            #inicio { flex-direction: column; text-align: center; margin-top: 20px; }
             .hero-img { justify-content: center; }
             .hero-text { padding: 0 15px; }
             .hero-buttons { justify-content: center; }
             .hero-info { display: flex; flex-direction: column; align-items: center; }
             .form-grid { grid-template-columns: 1fr; }
-            nav { display: none; /* En un proyecto real aquí iría un menú hamburguesa */ }
         }
     </style>
 </head>
