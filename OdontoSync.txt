@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 33. MARKETING Y SEO -->
+    <meta name="description" content="OdontoSync Pro - Tu clínica dental de confianza con la mejor tecnología.">
+    <meta name="keywords" content="Odontología, Clínica Dental, Ortodoncia, Implantes, El Salvador">
+    <meta property="og:title" content="OdontoSync Pro">
+    <title>OdontoSync Pro | Clínica Dental</title>
+    
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* 30. FUNCIONES DEL SITIO (Variables y Modo Oscuro) */
+        :root {
+            --primary: #005bc4;
+            --primary-hover: #004494;
+            --secondary: #00b4d8;
+            --bg-color: #ffffff;
+            --bg-alt: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --danger: #dc3545;
+            --success: #25D366;
+            --transition: all 0.3s ease;
+        }
+        body.dark-mode {
+            --bg-color: #121212;
+            --bg-alt: #1e1e1e;
+            --text-color: #f1f1f1;
+            --card-bg: #2a2a2a;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); transition: var(--transition); line-height: 1.6; overflow-x: hidden; }
+        
+        /* HEADER Y MENÚ CON EFECTO CRISTAL */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; background-color: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px); box-shadow: 0 2px 15px rgba(0,0,0,0.1); 
+            position: sticky; top: 0; z-index: 1000; transition: var(--transition);
+        }
+        body.dark-mode header { background-color: rgba(18, 18, 18, 0.9); box-shadow: 0 2px 15px rgba(255,255,255,0.05); }
+        
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-container i { font-size: 30px; color: var(--primary); }
+        .logo-container h1 { color: var(--primary); font-size: 24px; font-weight: 700; }
+        .logo-container p { font-size: 11px; color: var(--secondary); font-style: italic; letter-spacing: 1px; }
+        
+        nav { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 14px; transition: var(--transition); }
+        nav a:hover { color: var(--primary); }
+        
+        .btn { padding: 10px 22px; border-radius: 30px; border: none; cursor: pointer; font-weight: 600; text-decoration: none; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+        .btn-primary { background-color: var(--primary); color: white; box-shadow: 0 4px 15px rgba(0,91,196,0.3); }
+        .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+        .btn-danger { background-color: var(--danger); color: white; box-shadow: 0 4px 15px rgba(220,53,69,0.3); }
+        .btn-danger:hover { transform: translateY(-2px); }
+        
+        /* ANIMACIONES Y CLASES GENERALES */
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        
+        section { padding: 80px 5%; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        section:nth-child(even) { background-color: var(--bg-alt); }
+        h2.section-title { text-align: center; color: var(--primary); margin-bottom: 50px; font-size: 36px; font-weight: 700; position: relative; }
+        h2.section-title::after { content: ''; width: 60px; height: 4px; background: var(--secondary); display: block; margin: 10px auto 0; border-radius: 2px; }
+        
+        /* 1. INICIO (Estructura Solicitada: Imagen Circular Izq, Texto Der) */
+        #inicio { display: flex; align-items: center; justify-content: center; min-height: 85vh; gap: 60px; flex-wrap: wrap; }
+        .hero-img { flex: 1; display: flex; justify-content: center; min-width: 300px; animation: scaleIn 1s ease-out forwards; }
+        .hero-img img { width: 100%; max-width: 500px; aspect-ratio: 1/1; border-radius: 50%; object-fit: cover; box-shadow: 0 20px 40px rgba(0,91,196,0.2); border: 8px solid var(--card-bg); }
+        .hero-text { flex: 1; min-width: 300px; animation: slideInRight 1s ease-out forwards; }
+        .hero-text h2 { font-size: 52px; color: var(--primary); margin-bottom: 15px; line-height: 1.1; }
+        .hero-text h3 { font-size: 24px; color: var(--secondary); margin-bottom: 25px; font-weight: 400; }
+        .hero-text p { font-size: 16px; margin-bottom: 30px; color: var(--text-color); opacity: 0.9; }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        .hero-info { background: var(--card-bg); padding: 15px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: inline-block; }
+        .hero-info p { margin: 5px 0; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        
+        @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideInRight { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* GRIDS Y TARJETAS DETALLADAS */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background-color: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: var(--transition); border-top: 4px solid transparent; }
+        .card:hover { transform: translateY(-10px); border-top-color: var(--secondary); }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+        .card i.card-icon { font-size: 40px; color: var(--secondary); margin-bottom: 15px; display: block; }
+        .card h3 { color: var(--primary); margin-bottom: 15px; font-size: 22px; }
+        .card p { font-size: 14px; margin-bottom: 10px; color: var(--text-color); opacity: 0.9; }
+        
+        ul.styled-list { list-style: none; padding: 0; margin-top: 15px; }
+        ul.styled-list li { font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        ul.styled-list li i { color: var(--success); font-size: 12px; }
+
+        /* IMAGEN DE BANNER SEPARADOR */
+        .banner { background: linear-gradient(rgba(0, 91, 196, 0.8), rgba(0, 91, 196, 0.8)), url('https://images.unsplash.com/photo-1598256989800-fea5ce514b6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover fixed; color: white; text-align: center; padding: 100px 5%; }
+        .banner h2 { font-size: 40px; margin-bottom: 20px; }
+        .banner p { font-size: 18px; max-width: 700px; margin: 0 auto 30px; }
+
+        /* 6. FORMULARIO DE CITAS (Mejorado) */
+        .form-container { background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { position: relative; }
+        .input-group i { position: absolute; left: 15px; top: 15px; color: #888; }
+        input, select, textarea { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #ddd; border-radius: 8px; background: var(--bg-color); color: var(--text-color); font-size: 14px; transition: var(--transition); }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(0,91,196,0.1); }
+        textarea { padding-left: 15px; }
+
+        /* PERFIL DE DOCTORES */
+        .doctor-card { text-align: center; }
+        .doctor-card img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--secondary); margin: 0 auto 20px; display: block; }
+        .social-doc a { color: var(--primary); font-size: 18px; margin: 0 5px; transition: var(--transition); }
+        .social-doc a:hover { color: var(--secondary); }
+
+        /* BOTONES FLOTANTES */
+        .floating-wa { position: fixed; bottom: 20px; left: 20px; background: var(--success); color: white; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; border-radius: 50%; text-decoration: none; font-size: 30px; box-shadow: 0 4px 15px rgba(37,211,102,0.4); z-index: 1000; transition: var(--transition); animation: pulse 2s infinite; }
+        .floating-chat { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; border-radius: 50%; text-decoration: none; font-size: 24px; box-shadow: 0 4px 15px rgba(0,91,196,0.4); z-index: 1000; transition: var(--transition); }
+        .floating-wa:hover, .floating-chat:hover { transform: scale(1.1); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+
+        /* FOOTER AVANZADO */
+        footer { background-color: #111; color: #eee; padding: 70px 5% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        footer h4 { color: var(--secondary); margin-bottom: 20px; font-size: 18px; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul li a { color: #aaa; text-decoration: none; transition: var(--transition); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        footer ul li a:hover { color: white; padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #333; font-size: 13px; color: #777; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            #inicio { flex-direction: column; text-align: center; margin-top: 40px; }
+            .hero-img { justify-content: center; }
+            .hero-text { padding: 0 15px; }
+            .hero-buttons { justify-content: center; }
+            .hero-info { display: flex; flex-direction: column; align-items: center; }
+            .form-grid { grid-template-columns: 1fr; }
+            nav { display: none; /* En un proyecto real aquí iría un menú hamburguesa */ }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / MENÚ (Requisito: Menú arriba a la derecha con todo inicio) -->
+    <header>
+        <div class="logo-container">
+            <i class="fa-solid fa-tooth"></i>
+            <div>
+                <h1>OdontoSync Pro</h1>
+                <p>Tu Sonrisa, Nuestra Especialidad</p>
+            </div>
+        </div>
+        <nav>
+            <a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#especialidades">Especialidades</a>
+            <a href="#doctores">Doctores</a>
+            <a href="#pacientes"><i class="fa-solid fa-user-lock"></i> Portal</a>
+            <a href="#citas" class="btn btn-primary"><i class="fa-regular fa-calendar-check"></i> Agendar Cita</a>
+            <button id="themeToggle" class="btn" style="background:transparent; color:var(--text-color); border:1px solid #ccc;">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- 1. INICIO (Requisito: Imagen circular a la izq, Título a la der, todo súper detallado) -->
+    <section id="inicio">
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dra. OdontoSync Sonriendo">
+        </div>
+        <div class="hero-text">
+            <h2>Tecnología y cuidado para tu sonrisa</h2>
+            <h3>Bienvenido a la clínica del futuro</h3>
+            <p>En OdontoSync Pro unimos la experiencia médica con tecnología de punta. Desde limpieza general hasta diseño de sonrisa 3D. Explora nuestros servicios, promociones y testimonios reales.</p>
+            <div class="hero-buttons">
+                <a href="#citas" class="btn btn-primary"><i class="fa-solid fa-calendar-plus"></i> Agendar Cita</a>
+                <a href="#nosotros" class="btn" style="border: 2px solid var(--primary); color: var(--primary);"><i class="fa-brands fa-youtube"></i> Video Institucional</a>
+            </div>
+            <div class="hero-info">
+                <p><i class="fa-regular fa-clock" style="color:var(--secondary)"></i> Horarios: Lunes a Viernes 8:00 AM - 6:00 PM</p>
+                <p><i class="fa-solid fa-location-dot" style="color:var(--danger)"></i> Ubicación: San Salvador, El Salvador</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. NOSOTROS -->
+    <section id="nosotros">
+        <h2 class="section-title animate-on-scroll">Conoce Nuestra Clínica</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll">
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Instalaciones">
+                <i class="fa-solid fa-hospital card-icon"></i>
+                <h3>Filosofía y Objetivos</h3>
+                <p><strong>Historia:</strong> Fundada para revolucionar la salud dental integral.</p>
+                <p><strong>Misión:</strong> Brindar sonrisas perfectas con trato humano.</p>
+                <p><strong>Visión:</strong> Ser la clínica líder en tecnología a nivel nacional.</p>
+                <p><strong>Valores:</strong> Ética, Compromiso con el paciente, Filosofía de excelencia.</p>
+            </div>
+            <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tecnología">
+                <i class="fa-solid fa-microscope card-icon"></i>
+                <h3>Infraestructura</h3>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> Tecnología utilizada de punta (Escáneres 3D)</li>
+                    <li><i class="fa-solid fa-check"></i> Instalaciones modernas y esterilizadas</li>
+                    <li><i class="fa-solid fa-check"></i> Certificaciones y Acreditaciones internacionales</li>
+                    <li><i class="fa-solid fa-check"></i> Equipo profesional altamente capacitado</li>
+                    <li><i class="fa-solid fa-check"></i> Tour virtual por la clínica</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER SEPARADOR -->
+    <div class="banner animate-on-scroll">
+        <h2>Transformamos Sonrisas, Cambiamos Vidas</h2>
+        <p>Descubre nuestros tratamientos especializados. Desde odontología general preventiva hasta rehabilitaciones orales completas utilizando odontología digital y diseño CAD/CAM.</p>
+        <a href="#citas" class="btn btn-primary" style="background: white; color: var(--primary);">Solicitar Diagnóstico</a>
+    </div>
+
+    <!-- 3 Y 4. SERVICIOS Y ESPECIALIDADES -->
+    <section id="servicios">
+        <h2 class="section-title animate-on-scroll">3 y 4. Servicios y Especialidades</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll">
+                <i class="fa-solid fa-tooth card-icon"></i>
+                <h3>Odontología General</h3>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> Limpieza dental y Profilaxis dental</li>
+                    <li><i class="fa-solid fa-check"></i> Consulta y Diagnóstico dental</li>
+                    <li><i class="fa-solid fa-check"></i> Radiografías dentales</li>
+                    <li><i class="fa-solid fa-check"></i> Fluorización y Selladores dentales</li>
+                    <li><i class="fa-solid fa-check"></i> Tratamiento de caries, Restauraciones, Empastes y Resinas</li>
+                </ul>
+            </div>
+            <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+                <i class="fa-solid fa-teeth-open card-icon"></i>
+                <h3>Ortodoncia & Estética</h3>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> Brackets metálicos, estéticos e invisibles</li>
+                    <li><i class="fa-solid fa-check"></i> Alineadores dentales</li>
+                    <li><i class="fa-solid fa-check"></i> Blanqueamiento dental y Diseño de sonrisa</li>
+                    <li><i class="fa-solid fa-check"></i> Odontología preventiva y restauradora</li>
+                    <li><i class="fa-solid fa-check"></i> Carillas, Coronas y Puentes dentales</li>
+                </ul>
+            </div>
+            <div class="card animate-on-scroll" style="transition-delay: 0.4s;">
+                <i class="fa-solid fa-syringe card-icon"></i>
+                <h3>Especialidades Quirúrgicas</h3>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> Cirugía maxilofacial y de terceros molares</li>
+                    <li><i class="fa-solid fa-check"></i> Endodoncia (Tratamiento de conductos)</li>
+                    <li><i class="fa-solid fa-check"></i> Implantología y Prótesis dentales</li>
+                    <li><i class="fa-solid fa-check"></i> Periodoncia (Gingivitis, Periodontitis)</li>
+                    <li><i class="fa-solid fa-check"></i> Rehabilitación oral (ATM, Bruxismo)</li>
+                    <li><i class="fa-solid fa-check"></i> Odontopediatría, Patología oral y Sedación dental</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9 AL 15. DESGLOSE CLÍNICO DETALLADO -->
+    <section id="desglose-clinico">
+        <h2 class="section-title animate-on-scroll">Tratamientos Específicos</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--secondary)"></i> 9. Estética</h3>
+                <p>Blanqueamiento, Carillas, Diseño de sonrisa (Smile Design), Contorneado dental, Recontorneado gingival, Resinas y Coronas estéticas, Simulación de sonrisa.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-face-smile" style="color:var(--secondary)"></i> 10. Ortodoncia</h3>
+                <p>Ortodoncia tradicional (metálicos, cerámicos, zafiro, autoligables), Ortodoncia invisible, Retenedores, Estudios cefalométricos, Planificación digital.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-screwdriver" style="color:var(--secondary)"></i> 11. Implantología</h3>
+                <p>Implantes unitarios y múltiples, Prótesis sobre implantes, All-on-4, All-on-6, Injerto óseo, Elevación de seno maxilar, Cirugía guiada.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-child" style="color:var(--secondary)"></i> 12. Odontopediatría</h3>
+                <p>Primera visita infantil, Limpieza, Fluorización, Selladores, Pulpotomía, Extracciones infantiles, Ortodoncia infantil, Control de hábitos.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-lungs" style="color:var(--secondary)"></i> 13 y 14. Perio y Endo</h3>
+                <p><strong>Periodoncia:</strong> Limpieza profunda, Raspado radicular, Cirugía periodontal.<br><strong>Endodoncia:</strong> Diagnóstico pulpar, Retratamiento, Endodoncia microscópica.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-scalpel" style="color:var(--secondary)"></i> 15. Cirugía Oral</h3>
+                <p>Extracciones, Muelas del juicio, Cirugía de dientes retenidos, Frenectomía, Biopsias, Regeneración ósea, Injertos, Cuidados postoperatorios.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 16 AL 21. TECNOLOGÍA, RESULTADOS Y COMUNIDAD -->
+    <section id="tecnologia" style="background-color: var(--primary); color: white;">
+        <h2 class="section-title animate-on-scroll" style="color: white;">Innovación y Comunidad</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:white;">
+                <h3 style="color:white;"><i class="fa-solid fa-microchip"></i> 16. Tecnología</h3>
+                <p>Radiografía digital, Radiografía panorámica, Tomografía CBCT, Escáner y Cámara intraoral, Diseño CAD/CAM, Impresión 3D, Historia clínica digital.</p>
+            </div>
+            <div class="card animate-on-scroll" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:white;">
+                <h3 style="color:white;"><i class="fa-solid fa-camera"></i> 17 y 21. Galería y Casos</h3>
+                <p>Galería de la Clínica, Consultorios, Casos clínicos. Antes y después de Blanqueamiento, Ortodoncia, Carillas, Implantes y Rehabilitación oral.</p>
+            </div>
+            <div class="card animate-on-scroll" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:white;">
+                <h3 style="color:white;"><i class="fa-solid fa-star"></i> 18, 19, 20. Comunidad</h3>
+                <p><strong>Testimonios:</strong> Google Reviews, Historias en video.<br><strong>Promociones:</strong> Descuentos, Paquetes, Cupones.<br><strong>Blog:</strong> Consejos, Salud bucal, Higiene, Noticias.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. DOCTORES -->
+    <section id="doctores">
+        <h2 class="section-title animate-on-scroll">5. Nuestro Equipo Especializado</h2>
+        <div class="grid-container" style="justify-content: center; display: flex;">
+            <div class="card doctor-card animate-on-scroll" style="max-width: 400px;">
+                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Director Médico">
+                <h3>Dr. Alejandro Gómez</h3>
+                <p style="color:var(--primary); font-weight:bold;">Director Médico / Implantólogo</p>
+                <p><strong>Perfil:</strong> Especialista en Cirugía Oral y Maxilofacial. Miembro de asociaciones internacionales, múltiples certificaciones en diseño CAD/CAM.</p>
+                <div class="social-doc">
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. AGENDAR CITA (FORMULARIO DETALLADO Y HERMOSO) -->
+    <section id="citas">
+        <h2 class="section-title animate-on-scroll">6. Agendar Cita Online</h2>
+        <div class="form-container animate-on-scroll">
+            <form action="#" method="POST">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-phone"></i>
+                        <input type="tel" placeholder="Teléfono" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-calendar"></i>
+                        <input type="date" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-clock"></i>
+                        <input type="time" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-tooth"></i>
+                        <select><option>Servicio Requerido</option><option>Limpieza</option><option>Ortodoncia</option><option>Implantes</option></select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <select><option>Especialista de preferencia</option><option>Cualquiera</option><option>Dr. Alejandro Gómez</option></select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        <select><option>Tipo de paciente</option><option>Primera consulta</option><option>Paciente recurrente</option></select>
+                    </div>
+                    <textarea placeholder="Motivo de consulta..." rows="3" style="grid-column: 1 / -1;"></textarea>
+                    
+                    <div class="input-group">
+                        <i class="fa-solid fa-file-medical"></i>
+                        <select><option>Seguro médico (Opcional)</option></select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-comment"></i>
+                        <select><option>Método de contacto preferido</option><option>WhatsApp</option><option>Llamada</option></select>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Confirmación de cita</button>
+                    <button type="button" class="btn" style="background:#6c757d; color:white;"><i class="fa-solid fa-rotate-right"></i> Reprogramación</button>
+                    <button type="button" class="btn btn-danger"><i class="fa-solid fa-ban"></i> Cancelación</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 8. EMERGENCIAS DENTALES -->
+    <section id="emergencias" style="background-color: var(--danger); color: white; text-align: center;">
+        <h2 class="animate-on-scroll" style="font-size: 36px; margin-bottom: 20px;"><i class="fa-solid fa-truck-medical"></i> 8. Emergencias Dentales</h2>
+        <div class="animate-on-scroll" style="max-width: 800px; margin: 0 auto;">
+            <p style="font-size: 18px; margin-bottom: 30px;">Atención inmediata para: Dolor dental agudo, Diente roto o fracturado, Diente perdido por golpe, Sangrado excesivo, Inflamación, Absceso dental, Infección, Traumatismo dental, Dolor de muelas y Emergencias infantiles.</p>
+            <a href="#" class="btn" style="background: white; color: var(--danger); margin: 10px;"><i class="fa-solid fa-phone-volume"></i> Teléfono de emergencia</a>
+            <a href="#" class="btn" style="background: var(--success); color: white; margin: 10px;"><i class="fa-brands fa-whatsapp"></i> WhatsApp de emergencia</a>
+        </div>
+    </section>
+
+    <!-- 7, 30, 32. PACIENTES, ADMINISTRACIÓN Y FUNCIONES -->
+    <section id="pacientes">
+        <h2 class="section-title animate-on-scroll">Sistemas Internos</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-laptop-medical"></i> 7. Portal del Paciente</h3>
+                <p>Iniciar sesión, Registrarse, Recuperación de contraseña.</p>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> <strong>Perfil:</strong> Datos, Historial clínico y odontológico.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Citas:</strong> Próximas, Anteriores, Recordatorios.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Tratamientos:</strong> Plan, Diagnósticos, Radiografías, Fotografías, Recetas, Indicaciones.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Finanzas:</strong> Presupuestos, Facturas, Pagos.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Avisos:</strong> Notificaciones, Mensajes, Consentimientos.</li>
+                </ul>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3><i class="fa-solid fa-server"></i> 32 y 30. Administración</h3>
+                <p>Dashboard, Estadísticas y Auditoría. Roles y permisos, Notificaciones.</p>
+                <ul class="styled-list">
+                    <li><i class="fa-solid fa-check"></i> <strong>Gestión:</strong> Pacientes, Doctores, Citas, Servicios, Especialidades, Inventario, Blog, Testimonios.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Finanzas:</strong> Pagos, Facturación, Seguros, Reportes.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Funciones del sitio:</strong> Buscador, Menú responsive, Selector de idioma, Carrito, Agendamiento online, Chat, Calendario, Reseñas, Calificaciones.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 22, 23, 24, 25. PREGUNTAS, PRECIOS, PLANES Y SEGUROS -->
+    <section id="info-extra" style="background-color: var(--bg-alt);">
+        <h2 class="section-title animate-on-scroll">Guía del Paciente</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll"><h3>22. Preguntas Frecuentes</h3><p>Primera consulta, Formas de pago, Duración de tratamientos, Dolor, Anestesia, Cuidados posteriores, Caries, Niños.</p></div>
+            <div class="card animate-on-scroll"><h3>23. Precios y Financiamiento</h3><p>Costos de Consulta, Limpieza, Radiografías, Resinas, Extracciones, Endodoncia, Ortodoncia, Implantes. Métodos de pago.</p></div>
+            <div class="card animate-on-scroll"><h3>24. Planes y Membresías</h3><p>Plan individual, familiar, infantil, preventivo, ortodóntico, empresarial. Membresía dental, Beneficios, Descuentos.</p></div>
+            <div class="card animate-on-scroll"><h3>25. Seguros</h3><p>Seguros aceptados, Cobertura, Verificación de seguro, Convenios, Beneficios, Copagos, Reembolsos, Documentación.</p></div>
+        </div>
+    </section>
+
+    <!-- 26 Y 27. CONTACTO Y UBICACIÓN -->
+    <section id="contacto">
+        <h2 class="section-title animate-on-scroll">26 y 27. Contacto y Ubicación</h2>
+        <div class="grid-container">
+            <div class="card animate-on-scroll">
+                <h3>Contacto Rápido</h3>
+                <ul class="styled-list" style="font-size: 16px;">
+                    <li><i class="fa-solid fa-phone"></i> Teléfono Directo</li>
+                    <li><i class="fa-brands fa-whatsapp"></i> WhatsApp</li>
+                    <li><i class="fa-solid fa-envelope"></i> Correo electrónico</li>
+                    <li><i class="fa-solid fa-clock"></i> Horarios de Atención</li>
+                </ul>
+                <p style="margin-top:20px;">Contamos con formulario de contacto y WhatsApp directo integrado en la web.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3>Ubicación</h3>
+                <p>Mapa interactivo, Google Maps, Dirección, Cómo llegar, Transporte público, Estacionamiento, Puntos de referencia, Sucursales, Horarios por sucursal.</p>
+                <!-- Placeholder para el mapa de Google -->
+                <div style="width: 100%; height: 150px; background: #ddd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-top: 15px;">
+                    <i class="fa-solid fa-map-location-dot" style="font-size: 40px; color: #888;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTONES FLOTANTES Y FUNCIONES 30 -->
+    <a href="#" class="floating-wa"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="#" class="floating-chat"><i class="fa-solid fa-headset"></i></a>
+
+    <!-- 28, 29, 31, 33, 34. PIE DE PÁGINA AVANZADO -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h4><i class="fa-solid fa-tooth"></i> 29. OdontoSync Pro</h4>
+                <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Tu Sonrisa, Nuestra Especialidad. La mejor tecnología dental a tu alcance.</p>
+                <h4 style="margin-bottom: 10px; font-size: 15px;">28. Redes Sociales</h4>
+                <div style="display: flex; gap: 15px; font-size: 20px;">
+                    <a href="#" style="color:#aaa;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" style="color:#aaa;"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" style="color:#aaa;"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" style="color:#aaa;"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" style="color:#aaa;"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4>34. Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-angle-right"></i> Servicios</a></li>
+                    <li><a href="#"><i class="fa-solid fa-angle-right"></i> Especialidades</a></li>
+                    <li><a href="#"><i class="fa-solid fa-angle-right"></i> Contacto y Horarios</a></li>
+                    <li><a href="#"><i class="fa-solid fa-angle-right"></i> Dirección y Mapa</a></li>
+                    <li><a href="#"><i class="fa-solid fa-angle-right"></i> Blog y Preguntas frecuentes</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4>31. Seguridad y Legal</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Política de privacidad y Cookies</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Protección de datos</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Consentimiento informado</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Términos, condiciones y Aviso legal</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Autorización de fotos y tratamientos</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> Seguridad de cuentas y Control acceso</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4>33. Marketing</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-regular fa-envelope"></i> Newsletter (Suscripción)</a></li>
+                    <li><a href="#"><i class="fa-solid fa-tag"></i> Cupones, Promociones y Pop-ups</a></li>
+                    <li><a href="#"><i class="fa-solid fa-rocket"></i> Landing pages y Campañas</a></li>
+                </ul>
+                <p style="font-size:11px; color:#666; margin-top:10px;">SEO, Meta tags, Open Graph, Google Analytics, Search Console, Pixel de seguimiento, Remarketing, Formularios de leads, Call to Action.</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 OdontoSync Pro. Todos los derechos reservados. | Desarrollado por Jonathan Alexander Esquivel Prado (Módulo 3.7)</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PARA FUNCIONES DEL SITIO (30) -->
+    <script>
+        // Función de Modo Oscuro solicitada en el punto 30
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if(document.body.classList.contains('dark-mode')){
+                themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                themeToggle.style.color = '#ffdd00';
+            } else {
+                themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                themeToggle.style.color = 'var(--text-color)';
+            }
+        });
+
+        // Animaciones al hacer Scroll (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
