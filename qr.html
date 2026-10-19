@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR | OdontoSync Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #005bc4;
+            --primary-hover: #004494;
+            --secondary: #00b4d8;
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; background-color: var(--card-bg); 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1); 
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-container i { font-size: 30px; color: var(--primary); }
+        .logo-container h1 { color: var(--primary); font-size: 24px; font-weight: 700; }
+        .btn-volver { text-decoration: none; color: white; background: var(--primary); padding: 10px 20px; border-radius: 30px; font-weight: 600; transition: var(--transition); }
+        .btn-volver:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+        main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        
+        .qr-container { 
+            background: var(--card-bg); padding: 40px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;
+            max-width: 500px; width: 100%; border-top: 5px solid var(--primary);
+        }
+        .qr-container h2 { color: var(--primary); margin-bottom: 10px; }
+        .qr-container p { margin-bottom: 25px; font-size: 14px; color: #666; }
+
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group i { position: absolute; left: 15px; top: 16px; color: var(--primary); }
+        input { 
+            width: 100%; padding: 15px 15px 15px 45px; border: 2px solid #ddd; 
+            border-radius: 10px; font-size: 16px; outline: none; transition: var(--transition);
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,91,196,0.1); }
+
+        .btn-generar { 
+            width: 100%; padding: 15px; background: var(--primary); color: white; 
+            border: none; border-radius: 10px; font-size: 16px; font-weight: 700; 
+            cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-generar:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+        #qr-resultado { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px dashed #ccc; }
+        #qr-imagen { width: 250px; height: 250px; margin: 0 auto; border: 5px solid #f4f7f6; border-radius: 10px; }
+        
+        .btn-descargar {
+            display: inline-block; margin-top: 20px; padding: 10px 20px; 
+            background: var(--secondary); color: white; text-decoration: none; 
+            border-radius: 30px; font-weight: 600; transition: var(--transition);
+        }
+        .btn-descargar:hover { transform: scale(1.05); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .qr-container { padding: 25px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-container">
+            <i class="fa-solid fa-tooth"></i>
+            <h1>OdontoSync Pro</h1>
+        </a>
+        <a href="index.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+    </header>
+
+    <main>
+        <div class="qr-container">
+            <h2><i class="fa-solid fa-qrcode"></i> Generador de Códigos QR</h2>
+            <p>Ingresa el enlace de tu sitio web, clínica o cualquier texto para crear un código QR.</p>
+
+            <div class="input-group">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" id="texto-input" placeholder="Ej: https://yamishukehiro4-max.github.io/OdontoSync-Pro/">
+            </div>
+
+            <button class="btn-generar" onclick="generarQR()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generar Código QR
+            </button>
+
+            <div id="qr-resultado">
+                <h3>¡Tu QR está listo!</h3>
+                <br>
+                <img id="qr-imagen" src="" alt="Código QR Generado">
+                <br>
+                <a id="btn-descargar" class="btn-descargar" download="MiCodigoQR.png" href="#">
+                    <i class="fa-solid fa-download"></i> Descargar Imagen
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function generarQR() {
+            const texto = document.getElementById('texto-input').value;
+
+            if (texto.trim() === "") {
+                alert("Por favor, ingresa un enlace o texto primero.");
+                return;
+            }
+
+            // Usamos la API gratuita de QR Server para generar la imagen
+            const urlQR = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(texto)}`;
+
+            // Insertamos la imagen
+            const img = document.getElementById('qr-imagen');
+            img.src = urlQR;
+
+            // Configuramos el botón de descarga
+            const btnDescargar = document.getElementById('btn-descargar');
+            btnDescargar.href = urlQR;
+
+            // Mostramos el resultado
+            document.getElementById('qr-resultado').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
